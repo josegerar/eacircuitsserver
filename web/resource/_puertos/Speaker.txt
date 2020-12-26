@@ -1,0 +1,23 @@
+{"parameters":[{
+         "port":"Vcc",
+         "digital":false,
+         "analog":false,
+         "data":false,
+         "posx":"",
+         "posy":"",
+         "energy":true,
+         "min":"3",
+         "max":"5"
+      },
+      {
+         "port":"Out",
+         "digital":true,
+         "analog":false,
+         "data":false,
+         "posx":"",
+         "posy":"",
+         "energy":false,
+         "min":"",
+         "max":""
+      }
+   ],"code":"code code function"}

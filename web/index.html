@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>SERVER</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="background-color: #000;color: #FFF;">
+        <div id="back" style="position:absolute;left:10%;top:15%;color: #ffb815;">
+
+            <h3 style="color: #FFF;">LOGS:</h3>
+
+        </div>
+        <script>
+            window.onload = initx;
+            async function initx() {
+                let et = document.getElementById("back");
+                let date = new Date();
+                console.log(date.getFullYear());
+                await sleep(500);
+                et.innerHTML += "Loading...<br>";
+                await sleep(1000);
+                et.innerHTML += "Starting server<br>";
+                await sleep(800);
+                et.innerHTML += "Status: 200<br><br>";
+                await sleep(500);
+                et.innerHTML += "Conecting<br><br>";
+                await sleep(1000);
+                et.innerHTML += "Initializing services....<span id='number'>0%</span><br>";
+                for (var i = 0; i <= 10; i++) {
+                    document.getElementById("number").innerHTML = i + "0%";
+                    let subi = ((i === 0) ? 500 : 1000);
+                    await sleep(Math.random() * (subi - 200) + 200);
+                }
+                et.innerHTML += "conexion suffecul.<br>";
+                await sleep(400);
+                et.innerHTML += "year: " + date;
+                await sleep(500);
+                let ex = document.createElement("h3");
+                ex.innerHTML = 'SERVER IS RUNNING :3';
+                ex.style.color = "springgreen";
+                et.appendChild(ex);
+            }
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        </script>
+    </body>
+</html>

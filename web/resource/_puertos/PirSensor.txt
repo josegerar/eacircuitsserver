@@ -1,0 +1,11 @@
+{"parameters":[{"param":"Parameter 1"},{"param":"Parameter 2"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"},{"param":"Parameter 3"}],"ports": [{"port1":"Vcc 1"},{"port2":"Gnd 2"},{"port3":"Cvv 3"}],"code":
+"//TARJETA DE ARDUINO// \n
+void setup()\n
+{\n
+estamentos;\n
+}\n
+void loop()\n
+{\n
+estamentos;\n
+}"
+}

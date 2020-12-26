@@ -1,0 +1,33 @@
+{"parameters":[{
+         "port":"VCC",
+         "digital":false,
+         "analog":false,
+         "data":false,
+         "posx":"",
+         "posy":"",
+         "energy":true,
+         "min":"3",
+         "max":"5"
+      },
+      {
+         "port":"GND",
+         "digital":false,
+         "analog":false,
+         "data":false,
+         "posx":"",
+         "posy":"",
+         "energy":false,
+         "min":"",
+         "max":""
+      },
+      {
+         "port":"Signal",
+         "digital":false,
+         "analog":true,
+         "data":true,
+         "posx":"",
+         "posy":"",
+         "energy":false,
+         "min":"",
+         "max":""
+      }],"code":"code code function"}

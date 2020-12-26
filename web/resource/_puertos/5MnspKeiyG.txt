@@ -1,0 +1,1 @@
+{"parameters":[{"port":"key","digital":false,"analog":false,"data":false,"posx":114,"posy":39,"energy":false,"min":"","max":"","$$hashKey":"object:3"},{"port":"vcc","digital":false,"analog":false,"data":false,"posx":115,"posy":-24,"energy":true,"min":"3","max":"5","$$hashKey":"object:5"}],"code":"code code"}

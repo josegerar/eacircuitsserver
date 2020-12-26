@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="json">x</div>
+        <div id="res"></div>
+        <script>
+//            console.oncontextmenu = function(){return false;};
+
+            var arrayDataType_ = [
+                {"type": "int", "ej": "1"},
+                {"type": "long", "ej": "0.1"},
+                {"type": "char[]", "ej": "\"holis\""},
+                {"type": "char", "ej": "'A'"},
+                {"type": "boolea", "ej": "true"},
+                {"type": "byte", "ej": "0"}
+            ];
+            var structure = [
+                {
+                    "do": "int he=16;",
+                    "if": "mq == 10",
+                    "doif": [{
+                            "do": "codigo= 15+24;",
+//                            "flagIf": false,
+                            "if": "a=true",
+                            "doif": [
+                                {
+                                    "do": "print(44);",
+                                    "if": "cabrasRpsas==true",
+                                    "doif": [{
+                                            "do": "var i = 0;",
+                                            "if": "",
+                                            "doif": [],
+                                            "else": []
+                                        }],
+                                    "else": [{
+                                            "do": "var p = 1;",
+                                            "if": "",
+                                            "doif": [],
+                                            "else": []
+                                        }, {
+                                            "do": "var p = 2;",
+                                            "if": "",
+                                            "doif": [],
+                                            "else": []
+                                        }]
+                                }
+                            ],
+                            "else": []
+                        }],
+                    "else": [{
+                            "do": "codigo = codigo - 86;",
+//                            "flagElse": false,
+                            "if": "",
+                            "doif": [],
+                            "else": []
+                        }, {
+                            "do": "print(codigo+1);",
+//                            "flagElse": false,
+                            "if": "",
+                            "doif": [],
+                            "else": []
+                        }]
+                },
+                {
+                    "do": "delay(100);",
+                    "if": "",
+                    "doif": [],
+                    "else": [],
+                    "condi": {
+                        "condition": "a<20",
+                        "var": "i=0;",
+                        "inc": "" | "i++" | "i--" | "i-=2",
+                        docondi: []
+                    }
+                }
+            ];
+
+            let code =
+                    {
+                        "libraries": [
+                            "SoftwareSerial.h",
+                            "Morse.h",
+                            "WebApiUSB.h"
+                        ],
+                        "global": [
+                            {
+                                name: "superindice",
+                                type: "int",
+                                value: "24"
+                            },
+                            {
+                                name: "pi",
+                                type: "long",
+                                value: "3.14159265"
+                            },
+                            {
+                                name: "mex",
+                                type: "long",
+                                value: ""
+                            }
+                        ],
+                        "functions": [
+                            {
+                                "funcName": "supi",
+                                "params": [
+                                    {
+                                        "param": "quanty",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "param": "sup",
+                                        "type": "int"
+                                    }
+                                ],
+                                "returns": "-224",
+                                "type": "int", //|"int"|"long"
+                                "code": [
+                                    {
+                                        "do": "delay(100);",
+                                        "type": "", //|"if"|"for"|"while"
+                                        "condi": {
+                                            "condition": "",
+                                            "var": "i=0",
+                                            "plus": "i++"//|"i--"|"i-=2"
+                                        },
+                                        "docondi": [],
+                                        "else": []
+                                    }
+                                ]
+                            },
+                            {
+                                "funcName": "setup",
+                                "params": [
+                                    {
+                                        "param": "",
+                                        "type": ""
+                                    }
+                                ],
+                                "returns": "",
+                                "type": "void", //|"int"|"long"
+                                "code": [
+                                    {
+                                        "do": "delay(100);",
+                                        "type": "", //|"if"|"for"|"while"
+                                        "condi": {
+                                            "condition": "",
+                                            "var": "i=0;",
+                                            "plus": "i++"//|"i--"|"i-=2"
+                                        },
+                                        "docondi": [],
+                                        "else": []
+                                    }
+                                ]
+                            },
+                            {
+                                "funcName": "loop",
+                                "params": [
+                                    {
+                                        "param": "",
+                                        "type": ""
+                                    }
+                                ],
+                                "returns": "",
+                                "type": "void", //|"int"|"long"
+                                "code": [
+                                    {
+                                        "do": "delay(100);",
+                                        "type": "for", //|"if"|"for"|"while"
+                                        "condi": {
+                                            "condition": "i<10",
+                                            "var": "i=0",
+                                            "plus": "i++"//|"i--"|"i-=2"
+                                        },
+                                        "docondi": [
+                                            {
+                                                "do": "print(\"Holis\");",
+                                                "type": "if",
+                                                "condi": {
+                                                    "condition": "i<150",
+                                                    "var": "i=0",
+                                                    "plus": "i++"//|"i--"|"i-=2"
+                                                },
+                                                "docondi": [
+                                                    {
+                                                        "do": "print(\"Holaif\");",
+                                                        "type": "",
+                                                        "condi": {
+                                                            "condition": "",
+                                                            "var": "",
+                                                            "plus": ""
+                                                        },
+                                                        "docondi": [],
+                                                        "else": []
+                                                    }
+                                                ],
+                                                "else": [
+                                                    {
+                                                        "do": "print(\"adioselse\");",
+                                                        "type": "",
+                                                        "condi": {
+                                                            "condition": "",
+                                                            "var": "",
+                                                            "plus": ""
+                                                        },
+                                                        "docondi": [],
+                                                        "else": []
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "else": []
+                                    }
+                                ]
+                            }
+                        ]
+                    };
+            /*
+             *                  "condi": {
+             "condition":"",
+             "var":"i=0;"
+             "inc":""|"i++"|"i--"|"i-=2",
+             docondi:[]
+             }
+             */
+
+            console.log(analizeCode(code, 0));
+//            document.getElementById("json").innerHtml = "code";
+//            document.getElementById("res").innerHtml = analizeCode(code, 0);
+            function getIdenta(num)
+            {
+                return "\t".repeat(num);
+            }
+            /*
+             //            function analize(object, level) {
+             //                let superStruct = "";
+             //                if (object.length > 0)
+             //                {
+             //                    for (var i = 0; i < object.length; i++) {
+             //                        superStruct += analizeObject(object[i], level);
+             ////                        superStruct += (level === 0 ? "\n" : "");
+             //                        superStruct += ((object.length > 1 && i < object.length - 1) ? "\n" : "");
+             ////                        superStruct += "\n";
+             //                    }
+             //                }
+             //                return superStruct;
+             //            }
+             //            function analizeObject(object, level) {
+             //                let dox = object['do'];//plain code
+             //                dox = ((dox.length > 0 && dox !== undefined) ? (getIdenta(level) + dox) : "");
+             //                let ifx = object['if'];// plain code
+             //                ifx = ((ifx.length > 0 && ifx !== undefined) ? ("\n" + getIdenta(level) + "if(" + ifx + ")\n") : "");
+             //                let doifx = "";
+             //                let elsex = "";
+             //                if (ifx.length > 0 && ifx !== undefined)
+             //                {
+             //                    doifx = analize(object['doif'], level + 1);//recursive
+             //                    doifx = ((doifx.length > 0 && doifx !== undefined) ? (getIdenta(level) + "{\n" + doifx + "\n" + getIdenta(level) + "}") : "");
+             //                    elsex = analize(object['else'], level + 1);//recursive
+             //                    elsex = ((elsex.length > 0 && elsex !== undefined) ? ("\n" + getIdenta(level) + "else\n" + getIdenta(level) + "{\n" + elsex + "\n" + getIdenta(level) + "}") : "");
+             //                }
+             //                return dox + ifx + doifx + elsex;
+             //            }
+             */
+            function analize(object, level) {
+                let superStruct = "";
+                if (object.length > 0)
+                {
+                    for (var i = 0; i < object.length; i++) {
+                        superStruct += analizeObject(object[i], level);
+                        superStruct += ((object.length > 1 && i < object.length - 1) ? "\n" : "");
+                    }
+                }
+                return superStruct;
+            }
+            function analizeObject(object, level) {
+                let dox = object['do'];//plain code
+                dox = ((dox.length > 0 && dox !== undefined) ? (getIdenta(level) + dox) : "");
+                let ifx = object['if'];// plain code
+                ifx = ((ifx.length > 0 && ifx !== undefined) ? ("\n" + getIdenta(level) + "if(" + ifx + ")\n") : "");
+                let doifx = "";
+                let elsex = "";
+                if (ifx.length > 0 && ifx !== undefined)
+                {
+                    doifx = analize(object['doif'], level + 1);//recursive
+                    doifx = ((doifx.length > 0 && doifx !== undefined) ? (getIdenta(level) + "{\n" + doifx + "\n" + getIdenta(level) + "}") : "");
+                    elsex = analize(object['else'], level + 1);//recursive
+                    elsex = ((elsex.length > 0 && elsex !== undefined) ? ("\n" + getIdenta(level) + "else\n" + getIdenta(level) + "{\n" + elsex + "\n" + getIdenta(level) + "}") : "");
+                }
+                return dox + ifx + doifx + elsex;
+            }
+
+
+            function getEjDataType(tip)
+            {
+                let res = "\"\"";
+//                console.log(arrayDataType_);
+                for (var idx = 0; idx < arrayDataType_.length; idx++) {
+                    if (arrayDataType_[idx].type === tip)
+                    {
+                        res = arrayDataType_[idx].ej;
+                    }
+                }
+                return res;
+            }
+
+            function analizeCode(object, level)
+            {
+                let structure = "";
+                //librerias
+                for (var iter = 0; iter < object.libraries.length; iter++) {
+                    if (object.libraries[iter] !== undefined && object.libraries[iter].toString().trim().length !== 0)
+                    {
+                        structure += getIdenta(level) + "#include <" + object.libraries[iter] + ">;\n";
+                    }
+                }
+                //variable global
+                for (var iter = 0; iter < object.global.length; iter++) {
+                    if (object.global[iter].name !== undefined && object.global[iter].name.toString().trim().length !== 0)
+                    {
+                        structure += getIdenta(level) + object.global[iter].type + " " + object.global[iter].name + (object.global[iter].value.toString().trim().length > 0 ? (" = " + object.global[iter].value) : "") + ";\n";
+                    }
+                }
+                //functions
+                for (var iter = 0; iter < object.global.length; iter++) {
+                    if (object.functions[iter].funcName !== undefined && object.functions[iter].funcName.toString().trim().length !== 0)
+                    {
+                        structure += analizefunctions(object.functions[iter], level);
+                    }
+                }
+                return structure;
+            }
+
+            function analizefunctions(object, level) {
+                let structure = getIdenta(level) + (object.type===undefined?"void":object.type) + " " + object.funcName + "(";
+                let nflag = 0;
+                for (var idx = 0; idx < object.params.length; idx++) {
+                    if (object.params[idx].param !== undefined && object.params[idx].param.toString().trim().length !== 0)
+                    {
+                        structure += (nflag > 0 ? ", " : "") + object.params[idx].type + " " + object.params[idx].param;
+                        nflag = 1;
+                    }
+                }
+                structure += ")\n";
+                structure += getIdenta(level) + "{\n";
+                //codigo
+                structure += analizesection(object.code, level + 1);
+                if (object.type !== undefined && object.type.toString().trim() !== "" && object.type.toString().trim() !== "void")
+                {
+                    if (object.returns.toString() !== undefined && object.returns.toString().trim() !== "")
+                    {
+                        structure += getIdenta(level + 1) + "return " + object.returns + ";\n";
+                    } else
+                    {
+                        structure += getIdenta(level + 1) + "return " + getEjDataType(object.type) + ";\n";
+                    }
+                }
+                structure += getIdenta(level) + "}\n";
+                return structure;
+            }
+
+            function analizesection(object, level) {
+                let structure = "";
+                for (var idx = 0; idx < object.length; idx++) {
+                    if (object[idx].do.toString().trim().length > 0)
+                    {
+                        structure += getIdenta(level) + object[idx].do + "\n";
+                    }
+                    if (object[idx].condi !== undefined &&
+                            object[idx].condi.condition !== undefined &&
+                            object[idx].condi.condition.toString().trim().length > 0)
+                    {
+                        switch (object[idx].type) {
+                            case"if":
+                                {
+                                    structure += getIdenta(level) + "if(" + object[idx].condi.condition + ")\n";
+                                    structure += getIdenta(level) + "{\n";
+                                    structure += analizesection(object[idx].docondi, level + 1);
+                                    structure += getIdenta(level) + "}\n";
+                                    if (object[idx].else.length > 0 && object[idx].else !== undefined)
+                                    {
+                                        structure += getIdenta(level) + "else\n";
+                                        structure += getIdenta(level) + "{\n";
+                                        structure += analizesection(object[idx].else, level + 1);
+                                        structure += getIdenta(level) + "}\n";
+                                    }
+                                }
+                                break;
+                            case "while":
+                                {
+                                    structure += getIdenta(level) + "while(" + object[idx].condi.condition + ")\n";
+                                    structure += getIdenta(level) + "{\n";
+                                    structure += analizesection(object[idx].docondi, level + 1);
+                                    structure += getIdenta(level) + "}\n";
+                                }
+                                break;
+                            case "for":
+                                {
+                                    structure += getIdenta(level) + "for(" + object[idx].condi.var + ";" + object[idx].condi.condition + ";" + object[idx].condi.plus + ")\n";
+                                    structure += getIdenta(level) + "{\n";
+                                    structure += analizesection(object[idx].docondi, level + 1);
+                                    structure += getIdenta(level) + "}\n";
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                return structure;
+            }
+            /*
+             "do": "delay(100);",
+             "type": "", //|"if"|"for"|"while"
+             "condi": {
+             "condition": "",
+             "var": "i=0;",
+             "plus": "i++"//|"i--"|"i-=2"
+             },
+             "docondi": [],
+             "else": []
+             */
+//console.log("x");
+        </script>
+    </body>
+</html>
