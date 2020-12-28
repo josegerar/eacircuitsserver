@@ -6,43 +6,69 @@
 package DataStaticBD;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Usuario
- * In this class, the necessary methods for connecting, obtaining and sending data to the database are carried out.
+ * @author Usuario In this class, the necessary methods for connecting,
+ * obtaining and sending data to the database are carried out.
  */
-public class Conection {
+public final class Conection {
 
-    java.sql.Connection conex;
+    Connection conex;
     DefaultTableModel dataModel;
     ResultSet result;
     ResultSetMetaData rsmd;
-    java.sql.Statement st;
+    Statement st;
 
     public Conection() {
-
+        conex = getConecction();
     }
-    /** Method for opening connection
+
+    /**
+     * Method for opening connection
+     *
      * @return Return a Boolean.
      */
     public boolean openConecction() {
         try {
+            if (conex == null || conex.isClosed()) {
+                conex = getConecction();
+                return conex != null;
+            } else {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Conection.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        return false;
+    }
+
+    public synchronized Connection getConecction() {
+        Connection conecction = null;
+        try {
             Class.forName("org.postgresql.Driver");
-            conex = DriverManager.getConnection("jdbc:postgresql://" + DataStatic.dbhost + ":" + DataStatic.dbPort + "/" + DataStatic.dbName, DataStatic.dbUser, DataStatic.dbPassword);
-        } catch (Exception exc) {
+            conecction = DriverManager.getConnection("jdbc:postgresql://" + DataStatic.dbhost + ":" + DataStatic.dbPort + "/" + DataStatic.dbName, DataStatic.dbUser, DataStatic.dbPassword);
+        } catch (ClassNotFoundException | SQLException exc) {
             System.out.println("No connection");
             System.out.println(exc.getMessage());
-            return false;
         }
-        return true;
+        return conecction;
     }
-    /** This method closes the connection
+
+    /**
+     * This method closes the connection
+     *
      * @return Return a Boolean.
      */
     public boolean closeConnection() {
@@ -55,7 +81,10 @@ public class Conection {
         }
         return true;
     }
-    /** This method closes the ResultSet
+
+    /**
+     * This method closes the ResultSet
+     *
      * @return Return a Boolean.
      */
     public boolean closeResulSet() {
@@ -67,7 +96,10 @@ public class Conection {
         }
         return true;
     }
-    /** Receives a query and saves it in a table
+
+    /**
+     * Receives a query and saves it in a table
+     *
      * @param sentecy This String variable contains the query.
      * @return Returns a table with the data loaded from the query
      */
@@ -101,7 +133,10 @@ public class Conection {
         }
         return dataModel;
     }
-    /** This method receives a query from a function.
+
+    /**
+     * This method receives a query from a function.
+     *
      * @param sentecy This String variable, contains a query of a function.
      * @return Return a Boolean.
      */
@@ -120,7 +155,10 @@ public class Conection {
             return false;
         }
     }
-    /** Method to run an update on the database.
+
+    /**
+     * Method to run an update on the database.
+     *
      * @param sentecy This String variable, contains a query of a function.
      * @return an integer, amount of updates.
      */
@@ -140,8 +178,12 @@ public class Conection {
         }
         return counts;
     }
-    /** Execute any sentence in the database.
-     * @param sentecy this variable contains the sentence that will be executed in the database
+
+    /**
+     * Execute any sentence in the database.
+     *
+     * @param sentecy this variable contains the sentence that will be executed
+     * in the database
      * @return the value obtained when the sentence is executed in the database.
      */
     public String fillString(String sentecy) {
@@ -164,9 +206,12 @@ public class Conection {
             };
             closeConnection();
         }
-        return a==null?"0":a;
+        return a == null ? "0" : a;
     }
-    /** Get the following ID
+
+    /**
+     * Get the following ID
+     *
      * @param sentecy This String variable, contains a query of a function.
      * @return a string, with the following identifier.
      */
@@ -199,7 +244,10 @@ public class Conection {
         }
         return a;
     }
-   /** Obtain data and store it in a json
+
+    /**
+     * Obtain data and store it in a json
+     *
      * @param sentency This String variable, contains a query of a function.
      * @return a string, containing json.
      */
@@ -229,7 +277,10 @@ public class Conection {
         }
         return resul;
     }
-    /** Test the connection to the database.
+
+    /**
+     * Test the connection to the database.
+     *
      * @return a Boolean
      */
     public boolean testConection() {
@@ -243,5 +294,30 @@ public class Conection {
         }
         System.out.println("test:" + test);
         return test;
+    }
+
+    /**
+     * This method cast query database in object java
+     * @param <T> type object
+     * @param sql is query
+     * @param obj cast resultset
+     * @param structure 0 = kamelycasestructure, 1 dabaseestructure
+     * @return ArrayList object
+     */
+    public <T> ArrayList<T> getObjectDB(String sql, Class<T> obj, int structure) {
+        ArrayList<T> datos = new ArrayList();
+        if (openConecction()) {
+            try (Connection conn = conex) {
+                try(Statement stm = conn.createStatement()){
+                    try(ResultSet rs = stm.executeQuery(sql)){
+                         //ArrayList<Users> putResult = ResultSetPropertiesSimplifyHelps.putResult(rs, Users.class);
+                         datos = ReflectToClass.putResult(rs, obj, structure);
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return datos;
     }
 }

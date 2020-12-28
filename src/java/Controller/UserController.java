@@ -17,8 +17,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
- * @author tonyp
- * Respective validations of the User.
+ * @author tonyp Respective validations of the User.
  */
 public class UserController {
 
@@ -27,9 +26,13 @@ public class UserController {
     public UserController() {
         udao = new UserDAO();
     }
-    /** Method for logging 
+
+    /**
+     * Method for logging
+     *
      * @param email String type variable, contains the user's email.
-     * @param pwd String type variable, contains the encrypted password of the user.
+     * @param pwd String type variable, contains the encrypted password of the
+     * user.
      * @return It returns a String-type vector, which contains the state.
      */
     public String[] LogIn(String email, String pwd) {
@@ -61,21 +64,30 @@ public class UserController {
             return new String[]{"3", "The email is not valid.", "{}"};
         }
     }
-    /** Create a json with user data.
+
+    /**
+     * Create a json with user data.
+     *
      * @param usr User's Modal.
      * @return Returns a string with the json loaded with user data.
      */
     private String jsonUser(Users usr) {
         return udao.userDataJson(usr);
     }
-    /** Encrypt the user's password.
+
+    /**
+     * Encrypt the user's password.
+     *
      * @param pwd Password for user login.
      * @return a string with the encrypted password.
      */
     private String encriptPassword(String pwd) {
         return DigestUtils.sha256Hex(pwd);
     }
-     /** Method for creating a new user.
+
+    /**
+     * Method for creating a new user.
+     *
      * @param name String type variable, contains the name of the user.
      * @param lastname String type variable, contains the user's last name.
      * @param email String type variable, contains the user's mail.
@@ -89,19 +101,25 @@ public class UserController {
         System.out.println("analizare:" + pass + ":" + !pass.trim().equals(""));
         if (!name.trim().equals("") && !lastname.trim().equals("") && !pass.trim().equals("")
                 && Methods.comprobeEmail(email)) {
-            Users usr = new Users();
+            Users usr = udao.getUserEmail(email);
             usr.setNames_user(name);
             usr.setLastname_user(lastname);
             usr.setEmail_user(email);
             usr.setPassword_user(encriptPassword(pass));
 
-            String imgname = udao.verifiUrl(email);
-            usr.setImg_user(imgname);
+            //String imgname = udao.verifiUrl(email);
+            //usr.setImg_user(imgname);
             // allows to obtain a set of random characters for the validation of the account.
             CodeDJA cod = new CodeDJA();
             usr.setCodeverification_user(cod.getMaxAlea());
-            if (udao.comprobeUniqueEmail(usr)) {
+            if (usr.getId_user() == null || usr.getId_user().equals("")) {
                 if (udao.userInsert(usr)) {
+                    return LogIn(email, pass);
+                } else {
+                    return new String[]{"4", "Unregistered user.", "{}"};
+                }
+            } else if (usr.getTypeuser_user().equals("none") && Integer.parseInt(usr.getId_user()) > 0) {
+                if (udao.userUpdateUnabled(usr)) {
                     return LogIn(email, pass);
                 } else {
                     return new String[]{"4", "Unregistered user.", "{}"};
@@ -113,7 +131,10 @@ public class UserController {
             return new String[]{"4", "The input data does not meet the requirements.", "{}"};
         }
     }
-    /** Method for creating a new user for the API
+
+    /**
+     * Method for creating a new user for the API
+     *
      * @param data Json with loaded user data.
      * @return It returns a String-type vector, which contains the state.
      */
@@ -125,16 +146,27 @@ public class UserController {
             String email = Methods.JsonToString(Jso.getAsJsonObject(), "email", "");
             String pass = Methods.JsonToString(Jso.getAsJsonObject(), "pass", "");
             String img = Methods.JsonToString(Jso.getAsJsonObject(), "img", "");
-            Users usr = new Users();
+            Users usr = udao.getUserEmail(email);
+            usr.setNames_user(name);
+            usr.setLastname_user(lastname);
             usr.setEmail_user(email);
+            usr.setPassword_user(encriptPassword(pass));
+            usr.setEmail_user(email);
+            usr.setImg_user(img);
 //            String imgname = udao.verifiUrl(email);
-            if (udao.comprobeUniqueEmail(usr)) {
+            if (usr.getId_user() == null || usr.getId_user().equals("")) {
                 String[] response = createUserAPI(name, lastname, email, pass, img);
 //                if (response[0].equals("2") && !img.equals("")) {
 //                    saveImage(img, url + imgname, url);
 //                }
                 return response;
-            } else {
+            } else if (usr.getTypeuser_user().equals("none") && Integer.parseInt(usr.getId_user()) > 0) {
+                if (udao.userUpdateUnabled(usr)) {
+                    return LogIn(email, pass);
+                } else {
+                    return new String[]{"4", "Unregistered user.", "{}"};
+                }
+            }else {
                 String[] response = LogIn(email, pass);
                 return response;
             }
@@ -142,8 +174,11 @@ public class UserController {
             return new String[]{"4", "Invalid data.", "{}"};
         }
     }
-    /** Method to create a new user using the API
-    * @param name String type variable, contains the name of the user.
+
+    /**
+     * Method to create a new user using the API
+     *
+     * @param name String type variable, contains the name of the user.
      * @param lastname String type variable, contains the user's last name.
      * @param email String type variable, contains the user's mail.
      * @param pass String type variable, contains the user's password.
@@ -174,11 +209,15 @@ public class UserController {
             return new String[]{"4", "The input data does not meet the requirements.", "{}"};
         }
     }
-    /** Method for updating a user's information.
+
+    /**
+     * Method for updating a user's information.
+     *
      * @param name String type variable, contains the name of the user.
      * @param lastname String type variable, contains the user's last name.
      * @param email String type variable, contains the user's mail.
-     * @param phonenumbre String type variable, contains the user's phone number.
+     * @param phonenumbre String type variable, contains the user's phone
+     * number.
      * @param userID String type variable, contains the user's identifier.
      * @return It returns a String-type vector, which contains the state.
      */
@@ -205,8 +244,12 @@ public class UserController {
             return new String[]{"4", "The input data does not meet the requirements.", "{}"};
         }
     }
-   /** Method for activating a user's account.
-     * @param token String type variable, contains the security token (key) or also known as authentication token.
+
+    /**
+     * Method for activating a user's account.
+     *
+     * @param token String type variable, contains the security token (key) or
+     * also known as authentication token.
      * @param email String type variable, contains the user's email address.
      * @return It returns a String-type vector, which contains the state.
      */
@@ -249,9 +292,13 @@ public class UserController {
             return new String[]{"4", "The email is not valid.", "{}"};
         }
     }
-    /** Method to confirm the password entered by the user for a new account
+
+    /**
+     * Method to confirm the password entered by the user for a new account
+     *
      * @param email String type variable, contains the user's email address.
-     * @param code Variable of type String, contains the code sent to the mail to the user when registering.
+     * @param code Variable of type String, contains the code sent to the mail
+     * to the user when registering.
      * @param pwd String type variable, contains the account password.
      * @return It returns a String-type vector, which contains the state.
      */
@@ -270,7 +317,10 @@ public class UserController {
             return new String[]{"4", "The information is not valid.", "{}"};
         }
     }
-    /** Method for resubmitting the account verification code.
+
+    /**
+     * Method for resubmitting the account verification code.
+     *
      * @param email String type variable, contains the user's email address.
      * @return It returns a String-type vector, which contains the state.
      */

@@ -124,15 +124,15 @@ public class Users {
      */
     public String returnXmlForInsert() {
         String result = String.format(
-            "<user><names_user>%s</names_user>"
+            "<user>"
+                + "<names_user>%s</names_user>"
                 + "<lastname_user>%s</lastname_user>"
                 + "<email_user>%s</email_user>"
                 + "<password_user>%s</password_user>"
                 + "<codeverification_user>%s</codeverification_user>"
-                + "<img_user>%s</img_user>"
             + "</user>",
                 getNames_user(), getLastname_user(), getEmail_user(), 
-                getPassword_user(), getCodeverification_user(), getImg_user());
+                getPassword_user(), getCodeverification_user());
         return result;
     }
     
@@ -173,6 +173,27 @@ public class Users {
                 + "</user>",
                 getId_user(), getNames_user(), getLastname_user(), getEmail_user(), 
                 getPhone_user(), getImg_user());
+        return result;
+    }
+    
+    /**
+     * This function return the data in xml format
+     * for insert in database :3
+     * This XML is to make updates in the database concerning Users of IoT systems
+     * @return xml in string
+     */
+    public String returnXmlForUpdateUnabled() {
+        String result = String.format(
+                "<user>"
+                    + "<id_user>%s</id_user>"
+                    + "<names_user>%s</names_user>"
+                    + "<lastname_user>%s</lastname_user>"
+                    + "<email_user>%s</email_user>"
+                    + "<password_user>%s</password_user>"
+                    + "<codeverification_user>%s</codeverification_user>"
+                + "</user>",
+                getId_user(), getNames_user(), getLastname_user(), getEmail_user(), 
+                getPassword_user(),getCodeverification_user(), getImg_user());
         return result;
     }
     
@@ -224,5 +245,10 @@ public class Users {
                 getCodeverification_user(),getEmail_user(),getPassword_user());
         System.out.println(result);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" + "id_user=" + id_user + ", names_user=" + names_user + ", lastname_user=" + lastname_user + ", email_user=" + email_user + ", password_user=" + password_user + ", img_user=" + img_user + ", codeverification_user=" + codeverification_user + ", dateverification_user=" + dateverification_user + ", typeuser_user=" + typeuser_user + ", phone_user=" + phone_user + '}';
     }
 }

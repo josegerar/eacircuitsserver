@@ -10,6 +10,7 @@ import DataStaticBD.Methods;
 import DataStaticBD.TemplateEmail;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -62,7 +63,7 @@ public class UserDAO {
 
     /**
      * userInsert is for insert user
-     *
+     *userUpdateUnabled
      * @param usr contais the user for intert
      * @return return the id for user insert
      */
@@ -71,7 +72,24 @@ public class UserDAO {
         System.out.println(sentency);
         return conex.modifyBD(sentency);
     }
-
+    
+    /**
+     * userUpdateUnabled is for update user unabled
+     *
+     * @param usr contais the user for intert
+     * @return return the id for user insert
+     */
+    public boolean userUpdateUnabled(Users usr) {
+        String sentency = String.format("select * from updateuserunabled('%s');", usr.returnXmlForUpdateUnabled());
+        System.out.println(sentency);
+        boolean flag = conex.modifyBD(sentency);
+        if (flag) {
+            TemplateEmail tempe = new TemplateEmail();
+            tempe.userInsert(usr);
+        }
+        return flag;
+    }
+    
     /**
      * This function allows to obtain the data of a user according to an
      * identifier.
@@ -199,12 +217,23 @@ public class UserDAO {
     }
 
     /**
+     * Check that the email is not enabled.
+     *
+     * @param email
+     * @return returns a Boolean value from the result of the transaction.
+     */
+    public boolean comprobeUnableEmail(String email) {
+        String sentency = String.format("select * from users \n"
+                + "where email_user = '%s' AND typeuser_user != 'none';", email);
+        return ((conex.returnRecord(sentency)).getRowCount() <= 0);
+    }
+
+    /**
      * Method to verify the url
      *
      * @param url Contains the url address
      * @return Return the url
      */
-
     public String verifiUrl(String url) {
         DefaultTableModel table = conex.returnRecord("select img_user from users where img_user ilike '" + url + "%'");
         String result = "";
@@ -233,7 +262,7 @@ public class UserDAO {
         System.out.println("x");
         String sentency = String.format("select * from activeuseraccount('%s')", usr.returnXmlForActiveAccount());
         String res = conex.fillString(sentency);
-        System.out.println("xx"+res);
+        System.out.println("xx" + res);
         return (!res.equals("0") && !res.equals("1"));
     }
 
@@ -260,7 +289,6 @@ public class UserDAO {
      * @param usr User object containing the email to verify the information.
      * @return returns a Boolean value from the result of the transaction.
      */
-
     public boolean confirmPwdChange(Users usr) {
         String sentency = String.format("select * from confirmpwdchange('%s')", usr.returnXmlForChangePwd());
         String result = conex.fillString(sentency);
@@ -296,5 +324,22 @@ public class UserDAO {
      */
     public DefaultTableModel LogIn(String email) {
         return conex.returnRecord("select * from users where email_user='" + email + "'");
+    }
+    
+    
+    /**
+     * getUserEmail is for obtain data for email.
+     *
+     * @param email contains the user's email.
+     * @return object Users cotained data obtaining for database.
+     */
+    public Users getUserEmail(String email) {
+        String sql = String.format("select * from users where email_user = '%s'", email);
+        ArrayList<Users> usuario = conex.getObjectDB(sql, Users.class, 1);
+        if (usuario.size()>0) {
+            return usuario.get(0);
+        } else {
+            return new Users();
+        }
     }
 }

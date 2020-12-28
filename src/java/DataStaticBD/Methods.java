@@ -5,6 +5,7 @@
  */
 package DataStaticBD;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -23,6 +24,11 @@ import javax.swing.table.DefaultTableModel;
  * * This java class contains the methods used within the back-end of the application.
  */
 public final class Methods {
+    
+    /**
+     *Object to work json
+     */
+    public static final Gson gson = new Gson();
 
     public static String[] getDataToJwt(String jwt) {
         String[] response;
@@ -59,11 +65,7 @@ public final class Methods {
     public static Boolean comprobeEmail(String email) {
         Pattern pat = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");//".*@uteq.edu.ec"
         Matcher mat = pat.matcher(email);
-        if (mat.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return mat.matches();
     }
     /** Convert from string to json.
      * @param json String type variable, contains the json to be converted.
@@ -328,5 +330,11 @@ public final class Methods {
         String result = new Conection().fillString("select xml_valid('"+xml+"')");
 //        System.out.println("dbsaid:"+result);
         return result.equals("t");
+    }
+    
+    public static String objectToJsonString(Object obj){
+        String result;
+        result =  gson.toJson(obj);
+        return result;
     }
 }

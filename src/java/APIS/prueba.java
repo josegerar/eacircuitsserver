@@ -5,8 +5,13 @@
  */
 package APIS;
 
+import Controller.ProjectsController;
+import DAO.ProjectsDAO;
+import DAO.UserDAO;
 import DataStaticBD.Conection;
 import DataStaticBD.TemplateEmail;
+import java.util.ArrayList;
+import models.ProyectPermitMaster;
 import models.Users;
 
 /**
@@ -16,8 +21,17 @@ import models.Users;
 public class prueba {
     public static void main(String[] arg){
         Conection c = new Conection();
-        c.openConecction();
-        TemplateEmail tempe = new TemplateEmail();
-            tempe.userInsert(new Users("Jose", "Garcia", "CUVqwrcZDNrDGTFGTFOgARGYoqtWiYIFTdZr", "jgarcia24121996@gmail.com"));
+//        String sql = String.format("select pm.id_pm, pm.description_permitmaster, pm.projects_id_pr, pm.root_permitmaster, pm.joindate_permitmaster, \n"
+//                + "pr.name_project, pr.description_project, pr.code_project, pr.creationdate_project\n"
+//                + " from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr\n"
+//                + "where pm.users_id_user=%s and pm.joinactive_permitmaster=true and pm.description_permitmaster = 'ROOT'", 35);
+//        ArrayList<ProyectPermitMaster> datos =  c.getObjectDB(sql, ProyectPermitMaster.class, 1);
+        System.out.println(new UserDAO().getUserEmail("eloko-josphep@hotmail.com").toString());
+        //TemplateEmail tempe = new TemplateEmail();
+          //  tempe.userInsert(new Users("Jose", "Garcia", "CUVqwrcZDNrDGTFGTFOgARGYoqtWiYIFTdZr", "jgarcia24121996@gmail.com"));
+        Users us = new UserDAO().getUserEmail("eloko-josphep@hotmail.com");
+          TemplateEmail tempe = new TemplateEmail();
+            tempe.userInsert(us);
+          
     }
 }

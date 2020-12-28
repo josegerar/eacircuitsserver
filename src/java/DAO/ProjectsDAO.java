@@ -9,9 +9,12 @@ import DataStaticBD.CodeDJA;
 import DataStaticBD.Conection;
 import DataStaticBD.FileAccess;
 import DataStaticBD.Methods;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import models.EmailShareProyect;
 import models.Jobs;
 import models.Projects;
+import models.ProyectPermitMaster;
 
 /**
  * Class about the Data Access Object of Project.
@@ -59,7 +62,24 @@ public class ProjectsDAO {
                 + " from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr\n"
                 + "where pm.users_id_user=%s and pm.joinactive_permitmaster=true and pm.description_permitmaster = 'ROOT'", usr);
 //        System.out.println(sentency);
-        return conex.getRecordsInJson(sentency);
+        ArrayList<ProyectPermitMaster> datos = conex.getObjectDB(sentency, ProyectPermitMaster.class, 1);
+        datos.forEach(proyecto -> {
+            proyecto.setShare_users(getEmailsToProyectUserRoot(proyecto.getProjects_id_pr()));
+        });
+        return Methods.objectToJsonString(datos);
+    }
+
+    /**
+     * Method that returns the emails to proyects the user root.
+     *
+     * @param proyectID is id proyecto to query
+     * @return list emails proyecto t user root
+     */
+    public ArrayList<EmailShareProyect> getEmailsToProyectUserRoot(String proyectID) {
+        String sentency = String.format("select pm.description_permitmaster as permit, pm.users_id_user, pm.projects_id_pr, u.email_user as email\n"
+                + "from permitmaster pm inner join users u on pm.users_id_user = u.id_user\n"
+                + "where pm.projects_id_pr = %s and pm.root_permitmaster = false;", proyectID);
+        return conex.getObjectDB(sentency, EmailShareProyect.class, 1);
     }
 
     /**
@@ -104,8 +124,8 @@ public class ProjectsDAO {
      * @return It reports a string, inside it contains a json with data about
      * the projects.
      */
-    public String getLoadShareProjectsForConfirm(String id) {
-        String sentency = String.format("select * from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr where pm.users_id_user = %s and pm.joinactive_permitmaster = false and pm.root_permitmaster = false;", id);
+    public String getLoadShareProjectsForConfirm(String idUser) {
+        String sentency = String.format("select * from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr where pm.users_id_user = %s and pm.joinactive_permitmaster = false and pm.root_permitmaster = false;", idUser);
         String result = conex.getRecordsInJson(sentency);
         return result;
     }
@@ -118,11 +138,30 @@ public class ProjectsDAO {
      * the projects.
      */
     public String getLoadShareProjectsConfirm(String id) {
-        String sentency = String.format("select * from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr where pm.users_id_user = %s and pm.joinactive_permitmaster = true and pm.root_permitmaster = false;", id);
+        String sentency = String.format("select pm.id_pm, pr.id_pr, pm.description_permitmaster, pm.projects_id_pr, \n"
+                + "pm.root_permitmaster, pm.joindate_permitmaster, pr.name_project, \n"
+                + "pr.description_project, pr.code_project, pr.creationdate_project\n"
+                + "from permitmaster as pm inner join projects as pr on pm.projects_id_pr = pr.id_pr \n"
+                + "where pm.users_id_user = %s and pm.joinactive_permitmaster = true and pm.root_permitmaster = false;", id);
+        ArrayList<ProyectPermitMaster> datos = conex.getObjectDB(sentency, ProyectPermitMaster.class, 1);
+        datos.forEach(proyecto -> {
+            proyecto.setShare_users(getEmailsToProyectUserAdmin(proyecto.getProjects_id_pr(), id));
+        });
+        return Methods.objectToJsonString(datos);
+    }
 
-        String result = conex.getRecordsInJson(sentency);
-
-        return result;
+    /**
+     * Method that returns the emails to proyects the user root.
+     *
+     * @param proyectID is id proyecto to query
+     * @param userID is user admin nedd view oter email shared
+     * @return list emails proyecto t user root
+     */
+    public ArrayList<EmailShareProyect> getEmailsToProyectUserAdmin(String proyectID, String userID) {
+        String sentency = String.format("select pm.description_permitmaster as permit, pm.users_id_user, pm.projects_id_pr, u.email_user as email\n"
+                + "from permitmaster pm inner join users u on pm.users_id_user = u.id_user\n"
+                + "where pm.projects_id_pr = %s and pm.root_permitmaster = false and pm.users_id_user != %s and description_permitmaster = 'ADMIN';", proyectID, userID);
+        return conex.getObjectDB(sentency, EmailShareProyect.class, 1);
     }
 
     /**
@@ -285,5 +324,19 @@ public class ProjectsDAO {
         String sentency = "update permitmaster set joinactive_permitmaster = false where id_pm = " + idPermiMaster + "";
         //System.out.println(sentency);
         return conex.updateDB(sentency);
+    }
+
+    /**
+     *getEmailsForShare is methos for list emails for share
+     * @param idproj is code proyect
+     * @return list object EmailShareProyect
+     */
+    public ArrayList<EmailShareProyect> getEmailsForShare(String idproj) {
+        String sentency = String.format("select pm.description_permitmaster as permit, pm.users_id_user, pm.projects_id_pr,\n"
+                + "u.email_user as email, pj.code_project\n"
+                + "from permitmaster pm inner join users u on pm.users_id_user=u.id_user\n"
+                + "inner join projects pj on pj.id_pr = pm.projects_id_pr \n"
+                + "where pm.projects_id_pr = %s  and pm.root_permitmaster = false and pm.joinactive_permitmaster = false;", idproj);
+        return conex.getObjectDB(sentency, EmailShareProyect.class, 1);
     }
 }

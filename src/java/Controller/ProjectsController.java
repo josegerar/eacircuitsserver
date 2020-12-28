@@ -13,6 +13,8 @@ import DataStaticBD.TemplateEmail;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import models.EmailShareProyect;
 import models.Jobs;
 import models.Projects;
 import org.apache.commons.lang.RandomStringUtils;
@@ -102,6 +104,7 @@ public class ProjectsController {
         Projects proj = new Projects();
         proj.setId_pr(idproj);
         String[] res = pDao.shareProject(proj, total);
+        ArrayList<EmailShareProyect> emails = pDao.getEmailsForShare(idproj);
         if (res[0].equals("2") || res[0].equals("3")) {
             String[] emailfails = res[2].trim().split(" ");
             for (int index = 0; index < emailfails.length; index++) {
@@ -115,6 +118,7 @@ public class ProjectsController {
             String code = pDao.returnCodeProject(idproj);
             TemplateEmail templa = new TemplateEmail();
             templa.collaborativeWork(allemails, code);
+            //templa.collaborativeWork(emails);
         }
         return res;
     }
@@ -154,7 +158,7 @@ public class ProjectsController {
         Projects pro = new Projects();
         pro.setCode_project(codeProject);
         if (pDao.confirmShareProject(pro, id)) {
-            return new String[]{"2", "Data charge.", "{}"};
+            return new String[]{"2", "Data change.", "{}"};
         } else {
             return new String[]{"3", "Error in the params.", "{}"};
         }

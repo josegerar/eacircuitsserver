@@ -166,7 +166,7 @@ public class TemplateEmail {
         
         Email em = new Email();
         em.setmyEmailFrom(recorre(table, "email"), recorre(table, "emailpass"));
-        em.setContentEmail(receiver, "invitation to collaborate.", respon);
+        em.setContentEmail(receiver, "Invitation to collaborate.", respon);
         
         boolean status = em.sendmyEmail();
         System.out.println("resultado de envío: " +status);
