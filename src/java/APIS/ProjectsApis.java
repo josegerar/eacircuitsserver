@@ -158,7 +158,7 @@ public class ProjectsApis {
             if (!clains[0].equals("") && !clains[1].equals("sleep")) {
 //                System.out.println(arr.get(0));
 //                pController.shareProject(arr, projID);
-                String[] res = pController.shareProject(arr, projID);
+                String[] res = pController.shareProject(arr, projID, clains[0]);
                 message = "{\"status\":" + res[0] + ",\"information\":\"" + res[1] + "\",\"data\":" + res[2] + "}";
             } else {
                 message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":[]}";

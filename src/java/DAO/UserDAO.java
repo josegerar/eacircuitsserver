@@ -62,8 +62,8 @@ public class UserDAO {
     }
 
     /**
-     * userInsert is for insert user
-     *userUpdateUnabled
+     * userInsert is for insert user userUpdateUnabled
+     *
      * @param usr contais the user for intert
      * @return return the id for user insert
      */
@@ -72,7 +72,7 @@ public class UserDAO {
         System.out.println(sentency);
         return conex.modifyBD(sentency);
     }
-    
+
     /**
      * userUpdateUnabled is for update user unabled
      *
@@ -89,7 +89,7 @@ public class UserDAO {
         }
         return flag;
     }
-    
+
     /**
      * This function allows to obtain the data of a user according to an
      * identifier.
@@ -178,9 +178,8 @@ public class UserDAO {
                 .claim("user", usr.getId_user())
                 .claim("permit", usr.getTypeuser_user())
                 .setIssuedAt(new Date(tiempo))
-                .setExpiration(new Date(tiempo + 900000))
+                .setExpiration(new Date(tiempo + 60 * 60 * 1000))
                 .compact();
-
         JsonObjectBuilder jsoB = Json.createObjectBuilder();
         jsoB.add("email_user", usr.getEmail_user());
         jsoB.add("lastname_user", usr.getLastname_user());
@@ -325,8 +324,7 @@ public class UserDAO {
     public DefaultTableModel LogIn(String email) {
         return conex.returnRecord("select * from users where email_user='" + email + "'");
     }
-    
-    
+
     /**
      * getUserEmail is for obtain data for email.
      *
@@ -336,7 +334,7 @@ public class UserDAO {
     public Users getUserEmail(String email) {
         String sql = String.format("select * from users where email_user = '%s'", email);
         ArrayList<Users> usuario = conex.getObjectDB(sql, Users.class, 1);
-        if (usuario.size()>0) {
+        if (usuario.size() > 0) {
             return usuario.get(0);
         } else {
             return new Users();

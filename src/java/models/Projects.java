@@ -106,13 +106,14 @@ public class Projects {
      * @param emails String type variable, contains the user's email.
      * @return It returns a String, with an XML structure.
      */
-    public String returnXmlForshare(String emails) {
+    public String returnXmlForshare(String emails, String userIDAC) {
         String result = String.format(
                 "<projects>"
-                +"<id_pr>%s</id_pr>"
-                +"<users>%s</users>"
+                    +"<id_pr>%s</id_pr>"
+                    +"<user_id_ac>%s</user_id_ac>"
+                    +"<users>%s</users>"
                 + "</projects>",
-                getId_pr(),emails);
+                getId_pr(),userIDAC,emails);
         return result;
     }
     /** return xml for confirm share project

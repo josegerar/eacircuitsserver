@@ -101,10 +101,10 @@ public class ProjectsDAO {
      * @param emails String type variable, contains the user's mail.
      * @return It returns a String-type vector, which contains the state.
      */
-    public String[] shareProject(Projects proj, String emails) {
+    public String[] shareProject(Projects proj, String emails, String userID) {
         System.out.println("datosXML");
-        System.out.println(proj.returnXmlForshare(emails));
-        String sentency = String.format("select * from shareprojects('%s')", proj.returnXmlForshare(emails));
+        System.out.println(proj.returnXmlForshare(emails, userID));
+        String sentency = String.format("select * from shareprojects('%s');", proj.returnXmlForshare(emails, userID));
         DefaultTableModel table = conex.returnRecord(sentency);
         if (table.getRowCount() > 0) {
             return new String[]{

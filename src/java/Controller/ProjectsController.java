@@ -84,7 +84,7 @@ public class ProjectsController {
      * @param idproj String type variable, contains the project identifier.
      * @return It returns a String-type vector, which contains the state.
      */
-    public String[] shareProject(JsonArray arr, String idproj) {
+    public String[] shareProject(JsonArray arr, String idproj, String userID) {
         String total = "", allemails = "";
         for (JsonElement item : arr) {
             JsonObject jso = Methods.JsonElementToJSO(item);
@@ -103,8 +103,8 @@ public class ProjectsController {
         }
         Projects proj = new Projects();
         proj.setId_pr(idproj);
-        String[] res = pDao.shareProject(proj, total);
-        ArrayList<EmailShareProyect> emails = pDao.getEmailsForShare(idproj);
+        String[] res = pDao.shareProject(proj, total, userID);
+        //ArrayList<EmailShareProyect> emails = pDao.getEmailsForShare(idproj);
         if (res[0].equals("2") || res[0].equals("3")) {
             String[] emailfails = res[2].trim().split(" ");
             for (int index = 0; index < emailfails.length; index++) {
