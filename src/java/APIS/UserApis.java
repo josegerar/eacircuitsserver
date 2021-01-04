@@ -301,10 +301,33 @@ public class UserApis {
                 .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
                 .build();
     }
+    
+    public Response resendCodeVerify(String data) {
+        String message;
+        System.out.println("resendCodeVerify()");
+        System.out.println(data);
+        JsonObject Jso = Methods.stringToJSON(data);
+        if (Jso.size() > 0) {
+            String email = Methods.JsonToString(Jso, "email", "");
+            
+                String[] res = ucontrol.resendMeCodeVerify(email);
+                message = "{\"status\":" + res[0] + ",\"information\":\"" + res[1] + "\",\"data\":" + res[2] + "}";
+            
+        } else {
+            message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":[]}";
+        }
+        return Response.ok(message)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+                .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-with")
+                .build();
+    }
     /** This is the web service that allows you to obtain the session data.
      * @param data String type variable, receives a json with the necessary data from the user.
      * @return Returns a json with the results of the processes of the Controller's getDataSession function.
      */
+    
+    
     @Produces(MediaType.APPLICATION_JSON)
     @POST
     @Path("/getdatasession")
