@@ -300,20 +300,26 @@ public class UserDAO {
      * @return boolean to know the result
      * @param email is the user email for rec
      */
-    public boolean requestVerifyAccount(String email) {
-        if (Methods.comprobeEmail(email)) {
-            Users usr = userEmailSelect(email);
-            TemplateEmail tempe = new TemplateEmail();
-            if (usr.getTypeuser_user().equals("sleep")) {
-                //tempe.userInsert(usr);
-                tempe.requestCodeForConfirmAccount(usr);
-            } /*else {
-                tempe.requestCodeForChangePassword(usr);
-            }*/
-            return true;
-        } else {
-            return false;
+    public boolean requestVerifyAccount(String email, Users u) {
+        String sentency = String.format("select * from getverifycode('%s')", u.returnXmlForGetVerifiCode());
+        String result = conex.fillString(sentency);
+        boolean flag = (!result.equals("") && !result.equals("0"));
+        if (flag) {
+            if (Methods.comprobeEmail(email)) {
+                Users usr = userEmailSelect(email);
+                TemplateEmail tempe = new TemplateEmail();
+                if (usr.getTypeuser_user().equals("sleep")) {
+                    //tempe.userInsert(usr);
+                    tempe.requestCodeForConfirmAccount(usr);
+                } /*else {
+                    tempe.requestCodeForChangePassword(usr);
+                }*/
+                return true;
+            } else {
+                return false;
+            }
         }
+        return flag;
     }
 
     /**

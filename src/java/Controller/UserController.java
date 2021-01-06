@@ -326,7 +326,11 @@ public class UserController {
      */
     public String[] resendMeCodeVerify(String email) {
         if (Methods.comprobeEmail(email)) {
-            if (udao.requestVerifyAccount(email)) {
+            CodeDJA cod = new CodeDJA();
+            Users usr = new Users();
+            usr.setCodeverification_user(cod.getEmailCode());
+            usr.setEmail_user(email);
+            if (udao.requestVerifyAccount(email, usr)) {
                 return new String[]{"2", "Code sent correctly.", "{}"};
             } else {
                 return new String[]{"4", "The information could not be sent.", "{}"};
