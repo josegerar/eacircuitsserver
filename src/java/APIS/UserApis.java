@@ -280,17 +280,17 @@ public class UserApis {
         String message;
         System.out.println("resendMeCodeVerify()");
         System.out.println(data);
-        JsonObject Jso = Methods.stringToJSON(data);
+        JsonObject Jso = Methods.stringToJSON(data).getAsJsonObject("data");
         if (Jso.size() > 0) {
-            String email = Methods.JsonToString(Jso, "email", "");
+            String email = Methods.JsonToString(Jso, "email_user", "");
             String sessionToken = Methods.JsonToString(Jso, "user_token", "");
             
             String[] clains = Methods.getDataToJwt(sessionToken);
-            if (!clains[0].equals("") && !clains[1].equals("sleep")) {
+            if (!clains[0].equals("") && clains[1].equals("sleep")) {
                 String[] res = ucontrol.resendMeCodeVerify(email);
                 message = "{\"status\":" + res[0] + ",\"information\":\"" + res[1] + "\",\"data\":" + res[2] + "}";
             } else {
-                message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":[]}";
+                message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":"+clains[0]+"}";
             }
         } else {
             message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":[]}";

@@ -81,6 +81,14 @@ public class TemplateEmail {
         tr.start();
     }
     
+    public void requestCodeForConfirmAccount(Users usr) {
+        Thread tr = new Thread(() -> {
+            System.out.println("requestCodeForConfirmAccount()");
+            pRequestCodeForConfirmAccount(usr);
+        });
+        tr.start();
+    }
+    
     public void collaborativeWork(String receiver, String codeproject) {
         Thread tr = new Thread(() -> {
             System.out.println("collaborativeWorkEmail()");
@@ -143,6 +151,30 @@ public class TemplateEmail {
         Email em = new Email();
         em.setmyEmailFrom(recorre(table, "email"), recorre(table, "emailpass"));
         em.setContentEmail(usr.getEmail_user(), "Code to change your password.", respon);
+        
+        boolean status = em.sendmyEmail();
+        System.out.println("resultado de envío: " +status);
+    }
+    
+    private void pRequestCodeForConfirmAccount(Users usr){
+        DefaultTableModel table = conex.returnRecord(sentency);
+        String respon = recorre(table, "splantilla");
+        
+        respon = respon.replace("${paramimg}", recorre(table, "imgplantilla1"));
+        
+        respon = respon.replace("${paramnames}", usr.getNames_user() + " " + usr.getLastname_user());
+        
+        String urlx = recorre(table, "urlaplication");
+        respon = respon.replace("${paramsubject}", "You have requested a confirm account");
+        respon = respon.replace("${paramindex}", urlx + "index.html");
+        respon = respon.replace("${paramdetail}", "Confirm your account by accessing the following hyperlink");
+        
+        respon = respon.replace("${paramlabel}", "Click here!");
+        respon = respon.replace("${paramurl}", urlx + "notverified.html?tk=" + usr.getCodeverification_user()+"&usr="+usr.getEmail_user());
+        
+        Email em = new Email();
+        em.setmyEmailFrom(recorre(table, "email"), recorre(table, "emailpass"));
+        em.setContentEmail(usr.getEmail_user(), "Welcome to the EaCircuits community.", respon);
         
         boolean status = em.sendmyEmail();
         System.out.println("resultado de envío: " +status);

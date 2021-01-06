@@ -121,7 +121,7 @@ public class UserDAO {
      * @return Return an Users Object.
      */
     public Users userEmailSelect(String email) {
-        DefaultTableModel table = conex.returnRecord("select * from users where email_user=" + email);
+        DefaultTableModel table = conex.returnRecord("select * from users where email_user='" + email+"'");
         //id_user, names_user, lastname_user, email_user, password_user, phonenumbre_user
         Users usr = new Users();
         if (table.getRowCount() > 0) {
@@ -305,10 +305,11 @@ public class UserDAO {
             Users usr = userEmailSelect(email);
             TemplateEmail tempe = new TemplateEmail();
             if (usr.getTypeuser_user().equals("sleep")) {
-                tempe.userInsert(usr);
-            } else {
+                //tempe.userInsert(usr);
+                tempe.requestCodeForConfirmAccount(usr);
+            } /*else {
                 tempe.requestCodeForChangePassword(usr);
-            }
+            }*/
             return true;
         } else {
             return false;
