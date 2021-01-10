@@ -160,7 +160,7 @@ public class ProjectsDAO {
     public ArrayList<EmailShareProyect> getEmailsToProyectUserAdmin(String proyectID, String userID) {
         String sentency = String.format("select pm.description_permitmaster as permit, pm.users_id_user, pm.projects_id_pr, u.email_user as email\n"
                 + "from permitmaster pm inner join users u on pm.users_id_user = u.id_user\n"
-                + "where pm.projects_id_pr = %s and pm.root_permitmaster = false and pm.users_id_user != %s and description_permitmaster = 'ADMIN';", proyectID, userID);
+                + "where pm.projects_id_pr = %s and pm.root_permitmaster = false and pm.users_id_user != %s;", proyectID, userID);
         return conex.getObjectDB(sentency, EmailShareProyect.class, 1);
     }
 
