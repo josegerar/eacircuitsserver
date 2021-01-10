@@ -22,6 +22,7 @@ public class Users {
     private String lastname_user = "";
     private String email_user = "";
     private String password_user = "";
+    private String passwordGoogle_user = "";
     private String img_user = "";
     private String codeverification_user = "";
     private String dateverification_user = "";
@@ -74,9 +75,19 @@ public class Users {
         return password_user;
     }
 
+
     public void setPassword_user(String password_user) {
         this.password_user = password_user;
     }
+
+    public String getPasswordGoogle_user() {
+        return passwordGoogle_user;
+    }
+
+    public void setPasswordGoogle_user(String passwordGoogle_user) {
+        this.passwordGoogle_user = passwordGoogle_user;
+    }
+    
 
     public String getImg_user() {
         return img_user;
@@ -148,10 +159,11 @@ public class Users {
                 + "<lastname_user>%s</lastname_user>"
                 + "<email_user>%s</email_user>"
                 + "<password_user>%s</password_user>"
+                + "<passwordGoogle_user>%s</passwordGoogle_user>"
                 + "<img_user>%s</img_user>"
             + "</user>",
                 getNames_user(), getLastname_user(), getEmail_user(), 
-                getPassword_user(), getImg_user());
+                getPassword_user(), getPasswordGoogle_user(), getImg_user());
         return result;
     }
     
@@ -249,6 +261,6 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users{" + "id_user=" + id_user + ", names_user=" + names_user + ", lastname_user=" + lastname_user + ", email_user=" + email_user + ", password_user=" + password_user + ", img_user=" + img_user + ", codeverification_user=" + codeverification_user + ", dateverification_user=" + dateverification_user + ", typeuser_user=" + typeuser_user + ", phone_user=" + phone_user + '}';
+        return "Users{" + "id_user=" + id_user + ", names_user=" + names_user + ", lastname_user=" + lastname_user + ", email_user=" + email_user + ", password_user=" + password_user + ", img_user=" + img_user + ", codeverification_user=" + codeverification_user + ", dateverification_user=" + dateverification_user + ", typeuser_user=" + typeuser_user + ", phone_user=" + phone_user + ", passwordGoogle_user=" + passwordGoogle_user +  '}';
     }
 }
