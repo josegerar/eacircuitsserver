@@ -33,6 +33,8 @@ public class UserController {
      * @param email String type variable, contains the user's email.
      * @param pwd String type variable, contains the encrypted password of the
      * user.
+     * @param pwdgoogle String type variable, contains the encrypted password of the
+     * user GOOGLE.
      * @return It returns a String-type vector, which contains the state.
      */
     public String[] LogIn(String email, String pwd) {
@@ -47,6 +49,10 @@ public class UserController {
                 pwd = encriptPassword(pwd);
                 for (int index = 0; index < table.getRowCount(); index++) {
                     if (pwd.equals(table.getValueAt(index, 4).toString())) {
+                        usr = udao.setUser(table, index);
+                        message = "Access granted.";
+                        status = "2";
+                    }else if(pwd.equals(table.getValueAt(index, 10).toString())){
                         usr = udao.setUser(table, index);
                         message = "Access granted.";
                         status = "2";
@@ -145,17 +151,18 @@ public class UserController {
             String lastname = Methods.JsonToString(Jso.getAsJsonObject(), "lastname", "");
             String email = Methods.JsonToString(Jso.getAsJsonObject(), "email", "");
             String pass = Methods.JsonToString(Jso.getAsJsonObject(), "pass", "");
+            String pwdgoogle = Methods.JsonToString(Jso.getAsJsonObject(), "pwdgoogle", ""); 
             String img = Methods.JsonToString(Jso.getAsJsonObject(), "img", "");
             Users usr = udao.getUserEmail(email);
             usr.setNames_user(name);
             usr.setLastname_user(lastname);
             usr.setEmail_user(email);
-            usr.setPassword_user(encriptPassword(pass));
-            usr.setEmail_user(email);
+            usr.setPassword_user(pass);
+            usr.setPasswordGoogle_user(pwdgoogle);
             usr.setImg_user(img);
 //            String imgname = udao.verifiUrl(email);
             if (usr.getId_user() == null || usr.getId_user().equals("")) {
-                String[] response = createUserAPI(name, lastname, email, pass, img);
+                String[] response = createUserAPI(name, lastname, email, pass, pwdgoogle, img);
 //                if (response[0].equals("2") && !img.equals("")) {
 //                    saveImage(img, url + imgname, url);
 //                }
@@ -185,7 +192,7 @@ public class UserController {
      * @param urlimg It contains the url of the image.
      * @return It returns a String-type vector, which contains the state.
      */
-    private String[] createUserAPI(String name, String lastname, String email, String pass, String urlimg) {
+    private String[] createUserAPI(String name, String lastname, String email, String pass, String passgoogle, String urlimg) {
         if (!name.trim().equals("") && !lastname.trim().equals("") && !pass.trim().equals("")
                 && Methods.comprobeEmail(email)) {
             Users usr = new Users();
@@ -193,7 +200,7 @@ public class UserController {
             usr.setLastname_user(lastname);
             usr.setEmail_user(email);
             usr.setPassword_user(encriptPassword(pass));
-
+            usr.setPasswordGoogle_user(encriptPassword(passgoogle));
             usr.setImg_user(urlimg);
 
 //            if (udao.comprobeUniqueEmail(usr)) {
