@@ -171,14 +171,16 @@ public class UserDAO {
     public String userDataJson(Users usr) {
         String key = "digiclave";
         long tiempo = System.currentTimeMillis();
+        usr.setCreation_time(tiempo);
+        usr.setExpires_in(tiempo + 60 * 60 * 1000);
 //        System.out.println(new Date(tiempo) +"-" + new Date(tiempo+900000));
         String jwt = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, key)
                 .setSubject("-1")
                 .claim("user", usr.getId_user())
                 .claim("permit", usr.getTypeuser_user())
-                .setIssuedAt(new Date(tiempo))
-                .setExpiration(new Date(tiempo + 60 * 60 * 1000))
+                .setIssuedAt(new Date(usr.getCreation_time()))
+                .setExpiration(new Date(usr.getExpires_in()))
                 .compact();
         JsonObjectBuilder jsoB = Json.createObjectBuilder();
         jsoB.add("email_user", usr.getEmail_user());

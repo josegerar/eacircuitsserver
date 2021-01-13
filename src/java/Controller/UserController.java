@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import javax.swing.table.DefaultTableModel;
 import DAO.UserDAO;
 import DataStaticBD.CodeDJA;
+import DataStaticBD.UsersConnected;
 import models.Users;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -33,41 +34,51 @@ public class UserController {
      * @param email String type variable, contains the user's email.
      * @param pwd String type variable, contains the encrypted password of the
      * user.
-     * @param pwdgoogle String type variable, contains the encrypted password of the
-     * user GOOGLE.
      * @return It returns a String-type vector, which contains the state.
      */
     public String[] LogIn(String email, String pwd) {
-        if (Methods.comprobeEmail(email)) {
-            DefaultTableModel table = udao.LogIn(email);
-            String message = "User not found.";
-            String status = "4";
-            Users usr = new Users();
-            if (table.getRowCount() > 0) {
-                message = "Incorrect Password.";
-                status = "3";
-                pwd = encriptPassword(pwd);
-                for (int index = 0; index < table.getRowCount(); index++) {
-                    if (pwd.equals(table.getValueAt(index, 4).toString())) {
-                        usr = udao.setUser(table, index);
-                        message = "Access granted.";
-                        status = "2";
-                    }else if(pwd.equals(table.getValueAt(index, 10).toString())){
-                        usr = udao.setUser(table, index);
-                        message = "Access granted.";
-                        status = "2";
+        //UsersConnected.printUsers();
+        UsersConnected.updateListUsersConnected();
+        //System.out.println("User is conected: " + UsersConnected.isConnected(email));
+        if (!UsersConnected.isConnected(email)) {
+            if (Methods.comprobeEmail(email)) {
+                DefaultTableModel table = udao.LogIn(email);
+                String message = "User not found.";
+                String status = "4";
+                Users usr = new Users();
+                if (table.getRowCount() > 0) {
+                    message = "Incorrect Password.";
+                    status = "3";
+                    pwd = encriptPassword(pwd);
+                    for (int index = 0; index < table.getRowCount(); index++) {
+                        if (pwd.equals(table.getValueAt(index, 4).toString())) {
+                            usr = udao.setUser(table, index);
+                            message = "Access granted.";
+                            status = "2";
+                            UsersConnected.USERSCONNECTED.add(usr);
+                            break;
+                        } else if (pwd.equals(table.getValueAt(index, 10).toString())) {
+                            usr = udao.setUser(table, index);
+                            message = "Access granted.";
+                            status = "2";
+                            UsersConnected.USERSCONNECTED.add(usr);
+                            break;
+                        }
                     }
                 }
+                /**
+                 * The next is is used to verify that the account is
+                 * confirmated.
+                 */
+                if (usr.getTypeuser_user().equals("sleep")) {
+                    status = "5";
+                }
+                return new String[]{status, message, jsonUser(usr)};
+            } else {
+                return new String[]{"3", "The email is not valid.", "{}"};
             }
-            /**
-             * The next is is used to verify that the account is confirmated.
-             */
-            if (usr.getTypeuser_user().equals("sleep")) {
-                status = "5";
-            }
-            return new String[]{status, message, jsonUser(usr)};
         } else {
-            return new String[]{"3", "The email is not valid.", "{}"};
+            return new String[]{"3", "The user email is conected.", "{}"};
         }
     }
 
@@ -151,7 +162,7 @@ public class UserController {
             String lastname = Methods.JsonToString(Jso.getAsJsonObject(), "lastname", "");
             String email = Methods.JsonToString(Jso.getAsJsonObject(), "email", "");
             String pass = Methods.JsonToString(Jso.getAsJsonObject(), "pass", "");
-            String pwdgoogle = Methods.JsonToString(Jso.getAsJsonObject(), "pwdgoogle", ""); 
+            String pwdgoogle = Methods.JsonToString(Jso.getAsJsonObject(), "pwdgoogle", "");
             String img = Methods.JsonToString(Jso.getAsJsonObject(), "img", "");
             Users usr = udao.getUserEmail(email);
             usr.setNames_user(name);
@@ -173,7 +184,7 @@ public class UserController {
                 } else {
                     return new String[]{"4", "Unregistered user.", "{}"};
                 }
-            }else {
+            } else {
                 String[] response = LogIn(email, pass);
                 return response;
             }

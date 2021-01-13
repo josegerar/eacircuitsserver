@@ -7,16 +7,17 @@ package models;
 
 /**
  *
- * @author tonyp
- * This class refers to the Registered users, which are stored in the database.
+ * @author tonyp This class refers to the Registered users, which are stored in
+ * the database.
  */
 public class Users {
-    
+
     /**
-     * Get and set methods concerning Users of IoT systems, which are simple methods we use in classes to display (get) or modify (set) the value of an attribute.
-     * Each of the get methods returns a string and los métodos set them a void, and the validation will be done on the controllers.
+     * Get and set methods concerning Users of IoT systems, which are simple
+     * methods we use in classes to display (get) or modify (set) the value of
+     * an attribute. Each of the get methods returns a string and los métodos
+     * set them a void, and the validation will be done on the controllers.
      */
-    
     private String id_user = "";
     private String names_user = "";
     private String lastname_user = "";
@@ -28,6 +29,8 @@ public class Users {
     private String dateverification_user = "";
     private String typeuser_user = "";
     private String phone_user = "";
+    private long creation_time;
+    private long expires_in;
 
     public Users() {
     }
@@ -75,7 +78,6 @@ public class Users {
         return password_user;
     }
 
-
     public void setPassword_user(String password_user) {
         this.password_user = password_user;
     }
@@ -87,7 +89,6 @@ public class Users {
     public void setPasswordGoogle_user(String passwordGoogle_user) {
         this.passwordGoogle_user = passwordGoogle_user;
     }
-    
 
     public String getImg_user() {
         return img_user;
@@ -128,139 +129,161 @@ public class Users {
     public void setPhone_user(String phone_user) {
         this.phone_user = phone_user;
     }
-    /**This function return the data in xml format
-     * fro registered users
-     * This XML is to make insertions in the database concerning Users of IoT systems
+
+    public long getCreation_time() {
+        return creation_time;
+    }
+
+    public void setCreation_time(long creation_time) {
+        this.creation_time = creation_time;
+    }
+
+    public long getExpires_in() {
+        return expires_in;
+    }
+
+    public void setExpires_in(long expires_in) {
+        this.expires_in = expires_in;
+    }
+
+    /**
+     * This function return the data in xml format fro registered users This XML
+     * is to make insertions in the database concerning Users of IoT systems
+     *
      * @return xml in String
      */
     public String returnXmlForInsert() {
         String result = String.format(
-            "<user>"
+                "<user>"
                 + "<names_user>%s</names_user>"
                 + "<lastname_user>%s</lastname_user>"
                 + "<email_user>%s</email_user>"
                 + "<password_user>%s</password_user>"
                 + "<codeverification_user>%s</codeverification_user>"
-            + "</user>",
-                getNames_user(), getLastname_user(), getEmail_user(), 
+                + "</user>",
+                getNames_user(), getLastname_user(), getEmail_user(),
                 getPassword_user(), getCodeverification_user());
         return result;
     }
-    
+
     /**
-     * This function return the data in xml format
-     * fro registered users from api :3
-     * This XML is to make insertions in the database concerning Users of IoT systems
+     * This function return the data in xml format fro registered users from api
+     * :3 This XML is to make insertions in the database concerning Users of IoT
+     * systems
+     *
      * @return xml in string
      */
     public String returnXmlForInsertAPI() {
         String result = String.format(
-            "<user><names_user>%s</names_user>"
+                "<user><names_user>%s</names_user>"
                 + "<lastname_user>%s</lastname_user>"
                 + "<email_user>%s</email_user>"
                 + "<password_user>%s</password_user>"
                 + "<passwordGoogle_user>%s</passwordGoogle_user>"
                 + "<img_user>%s</img_user>"
-            + "</user>",
-                getNames_user(), getLastname_user(), getEmail_user(), 
+                + "</user>",
+                getNames_user(), getLastname_user(), getEmail_user(),
                 getPassword_user(), getPasswordGoogle_user(), getImg_user());
         return result;
     }
-    
-   /**
-     * This function return the data in xml format
-     * for insert in database :3
-     * This XML is to make updates in the database concerning Users of IoT systems
+
+    /**
+     * This function return the data in xml format for insert in database :3
+     * This XML is to make updates in the database concerning Users of IoT
+     * systems
+     *
      * @return xml in string
      */
     public String returnXmlForUpdate() {
         String result = String.format(
                 "<user>"
-                    + "<id_user>%s</id_user>"
-                    + "<names_user>%s</names_user>"
-                    + "<lastname_user>%s</lastname_user>"
-                    + "<email_user>%s</email_user>"
-                    + "<phone_user>%s</phone_user>"
-                    + "<img_user>%s</img_user>"
+                + "<id_user>%s</id_user>"
+                + "<names_user>%s</names_user>"
+                + "<lastname_user>%s</lastname_user>"
+                + "<email_user>%s</email_user>"
+                + "<phone_user>%s</phone_user>"
+                + "<img_user>%s</img_user>"
                 + "</user>",
-                getId_user(), getNames_user(), getLastname_user(), getEmail_user(), 
+                getId_user(), getNames_user(), getLastname_user(), getEmail_user(),
                 getPhone_user(), getImg_user());
         return result;
     }
-    
+
     /**
-     * This function return the data in xml format
-     * for insert in database :3
-     * This XML is to make updates in the database concerning Users of IoT systems
+     * This function return the data in xml format for insert in database :3
+     * This XML is to make updates in the database concerning Users of IoT
+     * systems
+     *
      * @return xml in string
      */
     public String returnXmlForUpdateUnabled() {
         String result = String.format(
                 "<user>"
-                    + "<id_user>%s</id_user>"
-                    + "<names_user>%s</names_user>"
-                    + "<lastname_user>%s</lastname_user>"
-                    + "<email_user>%s</email_user>"
-                    + "<password_user>%s</password_user>"
-                    + "<codeverification_user>%s</codeverification_user>"
+                + "<id_user>%s</id_user>"
+                + "<names_user>%s</names_user>"
+                + "<lastname_user>%s</lastname_user>"
+                + "<email_user>%s</email_user>"
+                + "<password_user>%s</password_user>"
+                + "<codeverification_user>%s</codeverification_user>"
                 + "</user>",
-                getId_user(), getNames_user(), getLastname_user(), getEmail_user(), 
-                getPassword_user(),getCodeverification_user(), getImg_user());
+                getId_user(), getNames_user(), getLastname_user(), getEmail_user(),
+                getPassword_user(), getCodeverification_user(), getImg_user());
         return result;
     }
-    
-   /**
-     * This function return the data in xml format
-     * for active your account
+
+    /**
+     * This function return the data in xml format for active your account
+     *
      * @return xml in string
      */
     public String returnXmlForActiveAccount() {
         String result = String.format(
                 "<user>"
-                    + "<email_user>%s</email_user>"
-                    + "<codeverification_user>%s</codeverification_user>"
+                + "<email_user>%s</email_user>"
+                + "<codeverification_user>%s</codeverification_user>"
                 + "</user>",
                 getEmail_user(),
                 getCodeverification_user());
         System.out.println(result);
         return result;
     }
-    
+
     /**
-     * This function return the data in xml format
-     * for request other verifyCode
+     * This function return the data in xml format for request other verifyCode
+     *
      * @return xml in string
      */
     public String returnXmlForGetVerifiCode() {
         String result = String.format(
                 "<user>"
-                    + "<codeverification_user>%s</codeverification_user>"
-                    +"<email_user>%s</email_user>"
+                + "<codeverification_user>%s</codeverification_user>"
+                + "<email_user>%s</email_user>"
                 + "</user>",
-                getCodeverification_user(),getEmail_user());
+                getCodeverification_user(), getEmail_user());
         System.out.println(result);
         return result;
     }
-    
+
     /**
-     * This function return the data in xml format
-     * for change user password
+     * This function return the data in xml format for change user password
+     *
      * @return xml in string
      */
     public String returnXmlForChangePwd() {
         String result = String.format(
                 "<user>"
-                    + "<codeverification_user>%s</codeverification_user>"
-                    +"<email_user>%s</email_user>"
-                    +"<password_user>%s</password_user>"
+                + "<codeverification_user>%s</codeverification_user>"
+                + "<email_user>%s</email_user>"
+                + "<password_user>%s</password_user>"
                 + "</user>",
-                getCodeverification_user(),getEmail_user(),getPassword_user());
+                getCodeverification_user(), getEmail_user(), getPassword_user());
         System.out.println(result);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Users{" + "id_user=" + id_user + ", names_user=" + names_user + ", lastname_user=" + lastname_user + ", email_user=" + email_user + ", password_user=" + password_user + ", img_user=" + img_user + ", codeverification_user=" + codeverification_user + ", dateverification_user=" + dateverification_user + ", typeuser_user=" + typeuser_user + ", phone_user=" + phone_user + ", passwordGoogle_user=" + passwordGoogle_user +  '}';
+        return "Users{" + "id_user=" + id_user + ", names_user=" + names_user + ", lastname_user=" + lastname_user + ", email_user=" + email_user + ", password_user=" + password_user + ", passwordGoogle_user=" + passwordGoogle_user + ", img_user=" + img_user + ", codeverification_user=" + codeverification_user + ", dateverification_user=" + dateverification_user + ", typeuser_user=" + typeuser_user + ", phone_user=" + phone_user + ", creation_time=" + creation_time + ", expires_in=" + expires_in + '}';
     }
+
 }
