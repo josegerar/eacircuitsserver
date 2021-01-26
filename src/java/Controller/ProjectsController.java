@@ -13,8 +13,6 @@ import DataStaticBD.TemplateEmail;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import models.EmailShareProyect;
 import models.Jobs;
 import models.Projects;
 import org.apache.commons.lang.RandomStringUtils;
