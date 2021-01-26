@@ -1,1 +1,0 @@
-{"parameters":[{"param":"Valor de gas/aire a considerar:","$$hashKey":"object:3"}],"ports":[{"port":"VCC","$$hashKey":"object:5"},{"port":"GND","$$hashKey":"object:7"},{"port":"D0","$$hashKey":"object:9"},{"port":"A0","$$hashKey":"object:11"}],"code":"int sensor (int valor)\n{ \nSerial.begin(valor)\nint sensorValue = analogRead(A0)\nSerial.println(sensorValue, DEC);\n}"}

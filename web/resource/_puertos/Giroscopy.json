@@ -1,0 +1,91 @@
+{
+    "parameters": [{
+            "port": "VCC",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "3",
+            "max": "5"
+        },
+        {
+            "port": "GND",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "SCL",
+            "digital": true,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "SDA",
+            "digital": true,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "XDA",
+            "digital": false,
+            "analog": true,
+            "data": true,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "XCL",
+            "digital": false,
+            "analog": true,
+            "data": true,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "ADO",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "3,3",
+            "max": "3,3"
+        },
+        {
+            "port": "INT",
+            "digital": false,
+            "analog": true,
+            "data": true,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        }],
+    "code": "code code function"
+}

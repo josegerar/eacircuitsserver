@@ -123,8 +123,8 @@ public class ComponentsApis {
             String sessionToken = Methods.JsonToString(Jso, "user_token", "");
             String[] clains = Methods.getDataToJwt(sessionToken);
             if (!clains[0].equals("") && !clains[1].equals("sleep")) {
-                String ruta = request.getServletContext().getRealPath("").replace("\\build\\web", "");
-                String[] res = cControl.getComponents(ruta + "_puertos\\");
+                String ruta = request.getServletContext().getRealPath("");
+                String[] res = cControl.getComponents(ruta.concat("\\resource\\_puertos\\"));
                 message = "{\"status\":" + res[0] + ",\"information\":\"" + res[1] + "\",\"data\":" + res[2] + "}";
             } else {
                 message = "{\"status\":4,\"information\":\"Error in the request parameters.\",\"data\":[]}";
@@ -162,7 +162,7 @@ public class ComponentsApis {
             String pathimg_component = Methods.JsonToString(Jso, "pathImgComponent", "");
             String dataParamPorts = Methods.JsonToString(Jso, "dataPorts", "");
             
-            String ruta = request.getServletContext().getRealPath("").replace("\\build\\web", "")+"_puertos";
+            String ruta = request.getServletContext().getRealPath("").concat("\\resource\\_puertos\\");
             
             if (!clains[0].equals("") && !clains[1].equals("sleep")) {
                 String[] res = cControl.saveComponent(nameComponent, descriptionComponennt, status, clains[0], pathimg_component, dataParamPorts, ruta);

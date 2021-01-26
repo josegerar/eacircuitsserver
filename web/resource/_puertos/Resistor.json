@@ -1,0 +1,25 @@
+{
+    "parameters": [{
+            "port": "Terminal1",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "3",
+            "max": "5"
+        },
+        {
+            "port": "Terminal2",
+            "digital": true,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        }],
+    "code": "code code function"
+}

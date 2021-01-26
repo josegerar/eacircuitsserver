@@ -7,6 +7,7 @@ package DAO;
 
 import DataStaticBD.Conection;
 import DataStaticBD.FileAccess;
+import DataStaticBD.Methods;
 import javax.swing.table.DefaultTableModel;
 import models.Component;
 
@@ -111,7 +112,7 @@ public class ComponentDAO {
                         + "\"description_component\":\"" + dataResponse.getValueAt(row, 2) + "\",\"active_component\":\"" + dataResponse.getValueAt(row, 3) + "\","
                         + "\"users_id_user\":\"" + dataResponse.getValueAt(row, 4) + "\",\"pathimg_component\":\"" + dataResponse.getValueAt(row, 5) + "\","
                         + "\"dateupload_component\":\"" + dataResponse.getValueAt(row, 6) + "\",\"pathparamports\":\"" + dataResponse.getValueAt(row, 7) + "\","
-                        + "\"dataParamsPorts\":" + fc.readFileText(ruta + dataResponse.getValueAt(row, 7).toString()) + "},";
+                        + "\"dataParamsPorts\":" + Methods.readJsonFile(ruta.concat(dataResponse.getValueAt(row, 7).toString())) + "},";
             }
             dataAux += "]";
             dataAux = dataAux.replace("},]", "}]");

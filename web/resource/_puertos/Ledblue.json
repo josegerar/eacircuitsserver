@@ -1,0 +1,25 @@
+{
+    "parameters": [{
+            "port": "Anode",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "1,5",
+            "max": "4"
+        },
+        {
+            "port": "Cathode",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        }],
+    "code": "code code function"
+}

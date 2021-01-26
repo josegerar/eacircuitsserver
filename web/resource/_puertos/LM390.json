@@ -1,0 +1,69 @@
+{
+    "parameters": [{
+            "port": "VIN",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "3",
+            "max": "5"
+        },
+        {
+            "port": "GND",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "3VO",
+            "digital": false,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": true,
+            "min": "3.3",
+            "max": "3.3"
+        },
+        {
+            "port": "INT",
+            "digital": false,
+            "analog": true,
+            "data": true,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "SDA",
+            "digital": true,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        },
+        {
+            "port": "SCL",
+            "digital": true,
+            "analog": false,
+            "data": false,
+            "posx": "",
+            "posy": "",
+            "energy": false,
+            "min": "",
+            "max": ""
+        }],
+    "code": "code code function"
+}

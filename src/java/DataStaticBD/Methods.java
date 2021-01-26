@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.regex.Matcher;
@@ -70,7 +71,6 @@ public final class Methods {
      * @param email String type variable, contains the email.
      * @return a String, for the security request.
      */
-
     public static Boolean comprobeEmail(String email) {
         Pattern pat = Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");//".*@uteq.edu.ec"
         Matcher mat = pat.matcher(email);
@@ -338,7 +338,6 @@ public final class Methods {
      * @param table Variable of type DefaultTableModel, table with loaded data
      * @return a String, with an html5 table with data.
      */
-
     public static String tableToHtmlTable(DefaultTableModel table) {
         String resul = "<table>";
         if (table != null) {
@@ -368,7 +367,6 @@ public final class Methods {
      * @param number String type variable, contains an integer to validate.
      * @return Returns a string, validating if it is integer.
      */
-
     public static String StringToIntegerString(String number) {
         int num;
         try {
@@ -404,7 +402,7 @@ public final class Methods {
     /**
      *
      * @param ruta
-     * @return
+     * @return res
      */
     public static String readJsonFile(String ruta) {
         String res = "";
@@ -415,21 +413,80 @@ public final class Methods {
             JsonElement obj = jsonParser.parse(reader);
             res = obj.toString();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
         return res;
     }
-    
-    
-    public static void writeJsonFile(String json, String ruta){
+
+    /**
+     *
+     * @param json
+     * @param ruta
+     */
+    public static void writeJsonFile(String json, String ruta) {
         //Write JSON file
         try (FileWriter file = new FileWriter(ruta)) {
- 
+
             file.write(json);
             file.flush();
- 
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     *
+     * @param carpeta
+     * @param extensionActual
+     * @param extensionNueva
+     */
+    public static void renameExtFileInDirectory(File carpeta, String extensionActual, String extensionNueva) {
+        for (final File ficheroEntrada : carpeta.listFiles()) {
+            if (ficheroEntrada.isDirectory()) {
+                Methods.renameExtFileInDirectory(ficheroEntrada, extensionActual, extensionNueva);
+            } else {
+                if (Methods.getExtensionFileName(ficheroEntrada.getName()).equals(extensionActual)) {
+                    File nuevonombre = new File(carpeta.getAbsolutePath()
+                            .concat("\\")
+                            .concat(Methods.getNameFileName(ficheroEntrada.getName()))
+                            .concat(".")
+                            .concat(extensionNueva));
+                    if (!nuevonombre.exists()) {
+                        ficheroEntrada.renameTo(nuevonombre);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param fileName
+     * @return fe
+     */
+    public static String getExtensionFileName(String fileName) {
+        String fe = "";
+        final Pattern PATTERN = Pattern.compile("(.*)\\.(.*)");
+        Matcher m = PATTERN.matcher(fileName);
+        if (m.find()) {
+            fe = m.group(2);
+        }
+        return fe;
+    }
+    
+    /**
+     *
+     * @param fileName
+     * @return fe
+     */
+    public static String getNameFileName(String fileName) {
+        String fe = "";
+        final Pattern PATTERN = Pattern.compile("(.*)\\.(.*)");
+        Matcher m = PATTERN.matcher(fileName);
+        if (m.find()) {
+            fe = m.group(1);
+        }
+        return fe;
     }
 }

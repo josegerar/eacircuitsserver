@@ -11,6 +11,7 @@ import DAO.UserDAO;
 import DataStaticBD.Conection;
 import DataStaticBD.Methods;
 import DataStaticBD.TemplateEmail;
+import java.io.File;
 import java.util.ArrayList;
 import models.ProyectPermitMaster;
 import models.Users;
@@ -35,5 +36,6 @@ public class prueba {
 //            tempe.userInsert(us);
 System.out.println(System.getProperty("user.dir"));
           //System.out.println(Methods.readJsonFile(System.getProperty("user.dir") + "\\web\\resource\\_puertos\\5MnspKeiyG.json"));
+          //Methods.renameExtFileInDirectory(new File(System.getProperty("user.dir") + "\\web\\resource\\_puertos"), "txt", "json");
     }
 }
