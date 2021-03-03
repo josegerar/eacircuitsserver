@@ -40,7 +40,7 @@ public class UserController {
         //UsersConnected.printUsers();
         UsersConnected.updateListUsersConnected();
         //System.out.println("User is conected: " + UsersConnected.isConnected(email));
-        if (!UsersConnected.isConnected(email)) {
+        //if (!UsersConnected.isConnected(email)) {
             if (Methods.comprobeEmail(email)) {
                 DefaultTableModel table = udao.LogIn(email);
                 String message = "User not found.";
@@ -77,9 +77,9 @@ public class UserController {
             } else {
                 return new String[]{"3", "The email is not valid.", "{}"};
             }
-        } else {
-            return new String[]{"3", "The user email is conected.", "{}"};
-        }
+        //} else {
+         //   return new String[]{"3", "The user email is conected.", "{}"};
+        //}
     }
 
     /**
